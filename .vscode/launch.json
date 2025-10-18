@@ -1,0 +1,18 @@
+{
+    "configurations": [
+        {
+            "command": "npm run tauri android dev",
+            "name": "Run Android Config",
+            "request": "launch",
+            "type": "node-terminal",
+            
+        },
+        {
+            "command": "npm run tauri dev",
+            "name": "Run Desktop Config",
+            "request": "launch",
+            "type": "node-terminal",
+            
+        }
+    ]
+}

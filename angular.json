@@ -60,7 +60,10 @@
         "serve": {
           "builder": "@angular/build:dev-server",
           "options": {
-            "port": 1420
+            "port": 1420,
+            "hmr": true,
+            "allowedHosts": true
+
           },
           "configurations": {
             "production": {
