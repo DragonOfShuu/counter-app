@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/core";
-import { TitleBar } from "../components/title-bar/title-bar";
+import { TitleBar } from "../shared/components/title-bar/title-bar";
 
 @Component({
   selector: "app-root",

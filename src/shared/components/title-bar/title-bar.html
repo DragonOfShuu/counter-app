@@ -1,8 +1,8 @@
 @if (isAWindow) {
   <div class="titlebar">
     <div data-tauri-drag-region></div>
-    <div class="controls [&_button]:hover:bg-amber-400">
-      <button (click)="minimizeWindow()" title="minimize">
+    <div class="controls [&_button]:hover:bg-mint-400">
+      <button (click)="minimizeWindow()" title="Minimize" unstyled>
         <!-- https://api.iconify.design/mdi:window-minimize.svg -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -13,7 +13,7 @@
           <path fill="currentColor" d="M19 13H5v-2h14z" />
         </svg>
       </button>
-      <button (click)="maximizeWindow()" title="maximize">
+      <button (click)="maximizeWindow()" title="Maximize" unstyled>
         <!-- https://api.iconify.design/mdi:window-maximize.svg -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +24,7 @@
           <path fill="currentColor" d="M4 4h16v16H4zm2 4v10h12V8z" />
         </svg>
       </button>
-      <button (click)="closeWindow()" title="close">
+      <button (click)="closeWindow()" title="Close" unstyled>
         <!-- https://api.iconify.design/mdi:close.svg -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
