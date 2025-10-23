@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class CounterInterfaceService {
   newCounter(id: string, initialValue: number): string|true {
     // Implementation goes here (use id as the identifier)
-    return true; // Placeholder return
+    return true;
   }
 
   incrementCounter(id: string, step: number): string|true {

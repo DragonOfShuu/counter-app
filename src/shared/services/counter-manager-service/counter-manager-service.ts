@@ -1,36 +1,53 @@
-import { computed, Injectable, resource, signal } from '@angular/core';
-import { load } from '@tauri-apps/plugin-store';
+import { Injectable } from "@angular/core";
+import { load } from "@tauri-apps/plugin-store";
+import { defer, merge, Observable, shareReplay, Subject, switchMap } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: "root",
 })
 export class CounterManagerService {
-    // store = await load("counters.json", { autoSave: true });
-    
-    storeResource = resource({
-        loader: async () => {
-            const store = await load("counters.json", { defaults: {}, autoSave: true });
-            const counterData = await store.get<CounterCollectionType>("counters");
-            return {store, counterData};
-        }
-    })
+    #counterData = new Subject<CounterCollectionType>();
 
-    // counterValueResource = resource({
-    //     params: () => ({store: this.storeResource}),
-    //     loader: async ({params}) => {
-    //         let { store: newStoreResource } = params;
-    //         if (!newStoreResource.hasValue()) return {};
+    store = defer(() => load("counters.json", { defaults: {}, autoSave: true })).pipe(
+        shareReplay({ bufferSize: 1, refCount: false })
+    );
+    counterData = merge(
+        this.#counterData,
+        this.store.pipe(
+            switchMap((store) => store.get<CounterCollectionType>("counters")),
+        )
+    ).pipe(
+        shareReplay({ bufferSize: 1, refCount: false })
+    );
 
-    //         const store = newStoreResource.value();
-    //         return store.get<CounterCollectionType>("counters") || {};
-    //     }
-    // })
+    #setCounterData(data: CounterCollectionType) {
+        const newSub = this.store.pipe(
+            switchMap((store) => store.set("counters", data))
+        ).subscribe(() => {
+            this.#counterData.next(data);
+        });
+    }
 
-    // counterValue = computed<CounterCollectionType>(() => {
-    //     if (!this.storeResource.hasValue()) return {};
+    // coolFunction() {
+    //     this.store.pipe(switchMap((store)=> store.set("counters", { something: "something" }))).subscribe({
+    //         next: () => {
+    //             console.log("Set successfully");
+    //         },
+    //         error: (err) => {
+    //             console.error("Error setting value:", err);
+    //         },
 
-    //     const store = this.storeResource.value();
-    //     return store.g
-    // });
-    
+    //     });
+    // }
+
+    newCounter(name: string, initialValue: number): Observable<void> {
+        return this.store.pipe(
+            switchMap((store) =>
+                store.set("counters", {
+                    ...store.get("counters"),
+                    [name]: initialValue,
+                })
+            )
+        );
+    }
 }
