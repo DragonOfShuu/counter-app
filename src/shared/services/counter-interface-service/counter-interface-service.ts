@@ -1,46 +1,58 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from "@angular/core";
+import { CounterManagerService } from "../counter-manager-service/counter-manager-service";
+import { firstValueFrom } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: "root",
 })
 export class CounterInterfaceService {
-  newCounter(id: string, initialValue: number): string|true {
-    // Implementation goes here (use id as the identifier)
-    return true;
-  }
+    counterManagerService = inject(CounterManagerService);
 
-  incrementCounter(id: string, step: number): string|true {
-    // Implementation goes here (use id as the identifier)
-    return true; // Placeholder return
-  }
+    newCounter(id: string, initialValue: number): Promise<void> {
+        return firstValueFrom(
+            this.counterManagerService.newCounterObservable(id, initialValue)
+        );
+    }
 
-  decrementCounter(id: string, step: number): string|true {
-    // Implementation goes here (use id as the identifier)
-    return true; // Placeholder return
-  }
+    incrementCounter(id: string, step: number): Promise<void> {
+        return firstValueFrom(
+            this.counterManagerService.incrementCounterObservable(id, step)
+        );
+    }
 
-  getCounterValue(id: string): number|string {
-    // Implementation goes here (use id as the identifier)
-    return 0; // Placeholder return
-  }
+    decrementCounter(id: string, step: number): Promise<void> {
+        return firstValueFrom(
+            this.counterManagerService.decrementCounterObservable(id, step)
+        );
+    }
 
-  getCounter(id: string): CounterType|string {
-    // Implementation goes here (use id as the identifier)
-    return { id: '', name: '', count: 0 }; // Placeholder return
-  }
+    getCounterValue(id: string): Promise<number> {
+        return firstValueFrom(
+            this.counterManagerService.getCounterValueObservable(id)
+        );
+    }
 
-  getCounterIds(): string[] {
-    // Implementation goes here (returns list of ids)
-    return []; // Placeholder return
-  }
+    getCounter(id: string): Promise<CounterType> {
+        return firstValueFrom(
+            this.counterManagerService.getCounterObservable(id)
+        );
+    }
 
-  deleteCounter(id: string): string|true {
-    // Implementation goes here (use id as the identifier)
-    return true; // Placeholder return
-  }
+    getCounterIds(): Promise<string[]> {
+        return firstValueFrom(
+            this.counterManagerService.getCounterIdsObservable()
+        );
+    }
 
-  resetCounter(id: string): string|true {
-    // Implementation goes here (use id as the identifier)
-    return true; // Placeholder return
-  }
+    deleteCounter(id: string): Promise<boolean> {
+        return firstValueFrom(
+            this.counterManagerService.deleteCounterObservable(id)
+        );
+    }
+
+    resetCounter(id: string): Promise<void> {
+        return firstValueFrom(
+            this.counterManagerService.resetCounterObservable(id)
+        );
+    }
 }
