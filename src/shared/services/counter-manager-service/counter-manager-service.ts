@@ -1,16 +1,6 @@
 import { Injectable } from "@angular/core";
 import { load } from "@tauri-apps/plugin-store";
-import {
-    catchError,
-    defer,
-    from,
-    merge,
-    Observable,
-    of,
-    shareReplay,
-    Subject,
-    switchMap,
-} from "rxjs";
+import { defer, from, Observable, of, shareReplay, switchMap } from "rxjs";
 import { uuid } from "../../functions/uuid.function";
 
 @Injectable({
