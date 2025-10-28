@@ -1,5 +1,5 @@
-#![allow(unused)]
 //! Module containing functions to deal with counters
+#![allow(unused)]
 
 use serde::{Serialize, Deserialize};
 
@@ -17,7 +17,7 @@ pub struct Counter {
 
 #[tauri::command]
 pub fn new_counter(counter: Counter) -> Result<String, String> {
-    Ok("placeholder".to_string())
+    Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
