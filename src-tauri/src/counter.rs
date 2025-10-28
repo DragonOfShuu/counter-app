@@ -22,17 +22,7 @@ pub fn new_counter(counter: Counter) -> Result<String, String> {
 
 #[tauri::command]
 pub fn get_counter(id: String) -> Result<Counter, String> {
-    Ok(
-        Counter {
-            name: "placeholder".to_string(),
-            count: 0,
-            color: "FFFFFF".to_string(),
-            default_count: 0,
-            default_step: 0,
-            date_created: 0,
-            date_modified: 0,
-        }
-    )
+    Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
