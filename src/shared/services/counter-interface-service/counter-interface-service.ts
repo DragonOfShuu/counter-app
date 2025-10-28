@@ -9,9 +9,9 @@ import { CounterManagerService } from "../counter-manager-service/counter-manage
 export class CounterInterfaceService {
     counterManagerService = inject(CounterManagerService);
 
-    newCounter(id: string, initialValue: number): Observable<void> {
+    newCounter(counter: Omit<CounterType, "id">): Observable<void> {
         return this.counterManagerService
-            .newCounterObservable(id, initialValue)
+            .newCounterObservable(counter)
             .pipe(take(1));
     }
 
@@ -24,6 +24,15 @@ export class CounterInterfaceService {
     decrementCounter(id: string, step: number): Observable<void> {
         return this.counterManagerService
             .decrementCounterObservable(id, step)
+            .pipe(take(1));
+    }
+
+    updateCounter(
+        id: string,
+        dataConsumer: (counter: CounterType) => Partial<CounterType>
+    ): Observable<void> {
+        return this.counterManagerService
+            .updateCounterObservable(id, dataConsumer)
             .pipe(take(1));
     }
 

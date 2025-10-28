@@ -11,14 +11,17 @@ export class CounterManagerService {
         load("counters.json", { defaults: {}, autoSave: true })
     ).pipe(shareReplay({ bufferSize: 1, refCount: false }));
 
-    newCounterObservable(name: string, initialValue: number): Observable<void> {
+    newCounterObservable(counter: Omit<CounterType, "id">): Observable<void> {
         return this.store.pipe(
-            switchMap((store) =>
-                store.set(uuid(), {
-                    name,
-                    count: initialValue,
-                })
-            )
+            switchMap((store) => {
+                const id = uuid();
+                return store.set(id, {
+                    ...counter,
+                    id,
+                    dateCreated: new Date().toISOString(),
+                    dateModified: new Date().toISOString(),
+                });
+            })
         );
     }
 
@@ -38,8 +41,22 @@ export class CounterManagerService {
         return this.store.pipe(switchMap((store) => store.keys()));
     }
 
-    setCounterObservable(id: string, data: CounterType): Observable<void> {
-        return this.store.pipe(switchMap((store) => store.set(id, data)));
+    updateCounterObservable(
+        id: string,
+        dataConsumer: (counter: CounterType) => Partial<CounterType>
+    ): Observable<void> {
+        return this.getCounterObservable(id).pipe(
+            switchMap((counter) => {
+                if (!counter) {
+                    throw new Error("Counter not found");
+                }
+                return this.store.pipe(
+                    switchMap((store) =>
+                        store.set(id, { ...counter, ...dataConsumer(counter) })
+                    )
+                );
+            })
+        );
     }
 
     deleteCounterObservable(id: string): Observable<boolean> {
@@ -47,45 +64,17 @@ export class CounterManagerService {
     }
 
     incrementCounterObservable(id: string, step: number): Observable<void> {
-        return this.getCounterObservable(id).pipe(
-            switchMap((counter) => {
-                if (!counter) {
-                    throw new Error("Counter not found");
-                }
-                return this.setCounterObservable(id, {
-                    ...counter,
-                    count: counter.count + step,
-                });
-            })
-        );
+        return this.updateCounterObservable(id, () => ({ count: step }));
     }
 
     decrementCounterObservable(id: string, step: number): Observable<void> {
-        return this.getCounterObservable(id).pipe(
-            switchMap((counter) => {
-                if (!counter) {
-                    throw new Error("Counter not found");
-                }
-                return this.setCounterObservable(id, {
-                    ...counter,
-                    count: counter.count - step,
-                });
-            })
-        );
+        return this.updateCounterObservable(id, () => ({ count: -step }));
     }
 
     resetCounterObservable(id: string): Observable<void> {
-        return this.getCounterObservable(id).pipe(
-            switchMap((counter) => {
-                if (!counter) {
-                    throw new Error("Counter not found");
-                }
-                return this.setCounterObservable(id, {
-                    ...counter,
-                    count: 0,
-                });
-            })
-        );
+        return this.updateCounterObservable(id, (counter) => ({
+            count: counter.defaultCount,
+        }));
     }
 
     getCounterValueObservable(id: string): Observable<number> {
