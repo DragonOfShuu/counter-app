@@ -1,5 +1,6 @@
 //! Module for interfacing with the database
-use std::fs:File;
+use std::fs::File;
+use std::io::Write;
 use super::CounterType;
 use serde::{Serialize, Deserialize};
 use serde_json::Result as JsonResult;
