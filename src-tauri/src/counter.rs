@@ -1,11 +1,13 @@
-//! Module containing functions to deal with counters
+//! Module containing functions for the frontend to call
 #![allow(unused)]
 
 use serde::{Serialize, Deserialize};
 
+mod storage;
+
 #[derive(Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Counter {
+pub struct CounterType {
     name: String,
     count: i64,
     color: String,
@@ -16,12 +18,12 @@ pub struct Counter {
 }
 
 #[tauri::command]
-pub fn new_counter(counter: Counter) -> Result<String, String> {
+pub fn new_counter(counter: CounterType) -> Result<String, String> {
     Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
-pub fn get_counter(id: String) -> Result<Counter, String> {
+pub fn get_counter(id: String) -> Result<CounterType, String> {
     Err("function is not implemented yet".to_string())
 }
 
@@ -31,7 +33,7 @@ pub fn get_counter_ids() -> Result<Vec<String>, String> {
 }
 
 #[tauri::command]
-pub fn update_counter(id: String, counter: Counter) -> Result<(), String> {
+pub fn update_counter(id: String, counter: CounterType) -> Result<(), String> {
     Err("function is not implemented yet".to_string())
 }
 
