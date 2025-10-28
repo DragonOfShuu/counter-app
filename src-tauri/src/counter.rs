@@ -1,3 +1,4 @@
+#![allow(unused)]
 //! Module containing functions to deal with counters
 
 use serde::{Serialize, Deserialize};
@@ -8,10 +9,10 @@ pub struct Counter {
     name: String,
     count: i64,
     color: String,
-    defaultCount: i64,
-    defaultStep: i64,
-    dateCreated: i64,
-    dateModified: i64,
+    default_count: i64,
+    default_step: i64,
+    date_created: i64,
+    date_modified: i64,
 }
 
 #[tauri::command]
@@ -26,52 +27,46 @@ pub fn get_counter(id: String) -> Result<Counter, String> {
             name: "placeholder".to_string(),
             count: 0,
             color: "FFFFFF".to_string(),
-            defaultCount: 0,
-            defaultStep: 0,
-            dateCreated: 0,
-            dateModified: 0,
+            default_count: 0,
+            default_step: 0,
+            date_created: 0,
+            date_modified: 0,
         }
     )
 }
 
 #[tauri::command]
 pub fn get_counter_ids() -> Result<Vec<String>, String> {
-    Ok(vec![])
+    Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
 pub fn update_counter(id: String, counter: Counter) -> Result<(), String> {
-
-    Ok(())
+    Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
 pub fn delete_counter(id: String) -> Result<(), String> {
-
-    Ok(())
+    Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
 pub fn increment_counter(id: String, step: i64) -> Result<(), String> {
-
-    Ok(())
+    Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
 pub fn decrement_counter(id: String, step: i64) -> Result<(), String> {
-
-    Ok(())
+    Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
 pub fn reset_counter(id: String) -> Result<(), String> {
-
-    Ok(())
+    Err("function is not implemented yet".to_string())
 }
 
 #[tauri::command]
 pub fn get_counter_value(id: String) -> Result<i64, String> {
-
-    Ok(0)
+    Err("function is not implemented yet".to_string())
 }
 
