@@ -3,13 +3,19 @@ import { Observable } from "rxjs";
 import { take } from "rxjs/operators";
 import { CounterManagerService } from "../counter-manager-service/counter-manager-service";
 
+/**
+ * When we introduce the Rust implementation,
+ * we can just switch this class and
+ * inject a different service that implements the same interface.
+ */
+
 @Injectable({
     providedIn: "root",
 })
 export class CounterInterfaceService {
     counterManagerService = inject(CounterManagerService);
 
-    newCounter(counter: Omit<CounterType, "id">): Observable<void> {
+    newCounter(counter: CounterType): Observable<string> {
         return this.counterManagerService
             .newCounterObservable(counter)
             .pipe(take(1));
@@ -29,7 +35,7 @@ export class CounterInterfaceService {
 
     updateCounter(
         id: string,
-        dataConsumer: (counter: CounterType) => Partial<CounterType>
+        dataConsumer: (counter: CounterType) => Partial<CounterTypeModifiable>
     ): Observable<void> {
         return this.counterManagerService
             .updateCounterObservable(id, dataConsumer)

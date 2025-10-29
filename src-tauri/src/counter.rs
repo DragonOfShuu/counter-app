@@ -1,7 +1,7 @@
 //! Module containing functions for the frontend to call
 #![allow(unused)]
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 mod storage;
 
@@ -38,7 +38,7 @@ pub fn update_counter(id: String, counter: CounterType) -> Result<(), String> {
 }
 
 #[tauri::command]
-pub fn delete_counter(id: String) -> Result<(), String> {
+pub fn delete_counter(id: String) -> Result<bool, String> {
     Err("function is not implemented yet".to_string())
 }
 
@@ -61,4 +61,3 @@ pub fn reset_counter(id: String) -> Result<(), String> {
 pub fn get_counter_value(id: String) -> Result<i64, String> {
     Err("function is not implemented yet".to_string())
 }
-

@@ -11,16 +11,19 @@ export class CounterManagerService {
         load("counters.json", { defaults: {}, autoSave: true })
     ).pipe(shareReplay({ bufferSize: 1, refCount: false }));
 
-    newCounterObservable(counter: Omit<CounterType, "id">): Observable<void> {
+    newCounterObservable(counter: CounterTypeModifiable): Observable<string> {
         return this.store.pipe(
             switchMap((store) => {
                 const id = uuid();
-                return store.set(id, {
-                    ...counter,
-                    id,
-                    dateCreated: new Date().toISOString(),
-                    dateModified: new Date().toISOString(),
-                });
+                store.set(id, {
+                    id: id,
+                    data: {
+                        ...counter,
+                        dateCreated: new Date().getTime(),
+                        dateModified: new Date().getTime(),
+                    },
+                } as Counter);
+                return of(id);
             })
         );
     }
@@ -43,7 +46,7 @@ export class CounterManagerService {
 
     updateCounterObservable(
         id: string,
-        dataConsumer: (counter: CounterType) => Partial<CounterType>
+        dataConsumer: (counter: CounterType) => Partial<CounterTypeModifiable>
     ): Observable<void> {
         return this.getCounterObservable(id).pipe(
             switchMap((counter) => {

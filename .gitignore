@@ -21,6 +21,7 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
+target/rust-analyzer/*
 
 # Visual Studio Code
 .vscode/*
