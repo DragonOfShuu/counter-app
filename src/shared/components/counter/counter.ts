@@ -30,36 +30,10 @@ export class Counter {
         this.counterId$
     ).pipe(
         filter((id) => !!id),
-        switchMap((id) =>
-            this.counterInterface.getCounter(id!).pipe(
-                catchError((e) => {
-                    console.error(
-                        "Issue occurred when fetching counter data:",
-                        e
-                    );
-                    return of(null);
-                })
-            )
-        )
+        switchMap((id) => this.counterInterface.getCounter(id!)),
+        catchError((e) => {
+            console.error("Issue occurred when fetching counter data:", e);
+            return of(null);
+        })
     );
-
-    // counterData = this.counterInterface.getCounter(this.counterId).pipe();
-
-    // counterData = computed(() => {
-    //     const id = this.counterId();
-    //     if (!id) {
-    //         return of(null);
-    //     }
-    //     return this.counterInterface.getCounter(id).pipe(
-    //         catchError((e) => {
-    //             console.error("Issue occurred when fetching counter data:", e);
-    //             return of(null);
-    //         })
-    //     );
-    // });
-
-    // counterValue = computed(() => {
-    //     const data = this.counterData();
-    //     return data ? data.count : 0;
-    // });
 }
