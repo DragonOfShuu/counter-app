@@ -2,16 +2,16 @@
 @import "tailwindcss";
 
 @theme {
-    --color-mint-50: #edf2f2;
-    --color-mint-100: #dae4e4;
-    --color-mint-200: #b5c9c9;
-    --color-mint-300: #90afaf;
-    --color-mint-400: #6b9494;
-    --color-mint-500: #467979;
-    --color-mint-600: #386161;
-    --color-mint-700: #2a4949;
-    --color-mint-800: #1c3030;
-    --color-mint-900: #0e1818;
+    --color-primary-50: #edf2f2;
+    --color-primary-100: #dae4e4;
+    --color-primary-200: #b5c9c9;
+    --color-primary-300: #90afaf;
+    --color-primary-400: #6b9494;
+    --color-primary-500: #467979;
+    --color-primary-600: #386161;
+    --color-primary-700: #2a4949;
+    --color-primary-800: #1c3030;
+    --color-primary-900: #0e1818;
 }
 
 @layer base {
@@ -21,7 +21,7 @@
         line-height: 24px;
         font-weight: 400;
 
-        @apply bg-mint-50;
+        @apply bg-primary-50;
 
         font-synthesis: none;
         text-rendering: optimizeLegibility;
@@ -77,19 +77,19 @@
 
     @variant dark {
         :root {
-            @apply bg-mint-900 text-mint-50;
+            @apply bg-primary-900 text-primary-50;
         }
 
         a:not([unstyled]):hover {
-            @apply text-mint-200;
+            @apply text-primary-200;
         }
 
         input:not([unstyled]),
         button:not([unstyled]) {
-            @apply text-mint-50 bg-mint-800;
+            @apply text-primary-50 bg-primary-800;
         }
         button:not([unstyled]):active {
-            @apply bg-mint-700;
+            @apply bg-primary-700;
         }
     }
 }

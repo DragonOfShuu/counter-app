@@ -1,15 +1,6 @@
 import { Component, computed, inject, input } from "@angular/core";
 import { CounterInterfaceService } from "../../services/counter-interface-service/counter-interface-service";
-import {
-    catchError,
-    filter,
-    iif,
-    merge,
-    mergeMap,
-    Observable,
-    of,
-    switchMap,
-} from "rxjs";
+import { catchError, filter, merge, Observable, of, switchMap } from "rxjs";
 import { toObservable } from "@angular/core/rxjs-interop";
 
 @Component({
