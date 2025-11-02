@@ -4,13 +4,24 @@
 use serde::{Deserialize, Serialize};
 
 mod storage;
+use storage::*;
 
-#[derive(Clone, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[derive(clone, serialize, deserialize)]
+#[serde(rename_all = "camelcase")]
+pub struct CounterTypeModifiable{
+    name: Option<string>,
+    count: Option<i64>,
+    color: Option<string>,
+    default_count: Option<i64>,
+    default_step: Option<i64>,
+}
+
+#[derive(clone, serialize, deserialize)]
+#[serde(rename_all = "camelcase")]
 pub struct CounterType {
-    name: String,
+    name: string,
     count: i64,
-    color: String,
+    color: string,
     default_count: i64,
     default_step: i64,
     date_created: i64,
@@ -18,7 +29,7 @@ pub struct CounterType {
 }
 
 #[tauri::command]
-pub fn new_counter(counter: CounterType) -> Result<String, String> {
+pub fn new_counter(counter: CounterTypeModifiable) -> Result<String, String> {
     Err("function is not implemented yet".to_string())
 }
 
@@ -33,7 +44,7 @@ pub fn get_counter_ids() -> Result<Vec<String>, String> {
 }
 
 #[tauri::command]
-pub fn update_counter(id: String, counter: CounterType) -> Result<(), String> {
+pub fn update_counter(id: String, counter: CounterTypeModifiable) -> Result<(), String> {
     Err("function is not implemented yet".to_string())
 }
 
