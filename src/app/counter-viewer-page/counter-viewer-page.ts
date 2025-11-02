@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { Counter } from "../../../shared/components/counter/counter";
-import { FooterBar } from "../../../shared/components/footer-bar/footer-bar";
+import { Counter } from "../../shared/components/counter/counter";
+import { FooterBar } from "../../shared/components/footer-bar/footer-bar";
 
 @Component({
     selector: "app-counter-viewer-page",
