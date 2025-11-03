@@ -26,8 +26,6 @@ pub fn store(counter: CounterType) -> Result<Uuid, String> {
     let id = Uuid::new_v4();
     let mut vault = vault();
 
-    println!("{:?}", vault);
-
     let mut data = HashMap::new();
     data.insert(id, counter);
 
