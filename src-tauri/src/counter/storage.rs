@@ -8,8 +8,12 @@ use super::types::CounterType;
 use serde::{Serialize, Deserialize};
 use uuid::Uuid;
 
+/// The type that's represented by the json file
+/// a list of essentially json objects with the UUID as a key
+/// and a CounterType instance as its value
 type Vault = Vec<HashMap<Uuid, CounterType>>;
 
+/// Parses the json file and returns a Vault type
 fn vault() -> Vault {
     let mut file = match File::open("counters.json") {
         Ok(file) => file,
@@ -22,6 +26,9 @@ fn vault() -> Vault {
     serde_json::from_str(&json_out).unwrap_or(Vec::new())
 }
 
+/// Stores a CounterType instance in the json file
+/// and returns a generated UUID, or a String contianing
+/// the error if it failed
 pub fn store(counter: CounterType) -> Result<Uuid, String> {
     let id = Uuid::new_v4();
     let mut vault = vault();
@@ -47,6 +54,7 @@ pub fn store(counter: CounterType) -> Result<Uuid, String> {
     }
 }
 
+/// Grabs a specific counter from the vault
 pub fn get(id: Uuid) {
     
 }
@@ -56,6 +64,7 @@ mod tests {
     use super::*;
 
     #[test]
+    /// note that running this test will add a counter to the json file
     fn store_without_error() {
         let counter_data = CounterType::new();
 

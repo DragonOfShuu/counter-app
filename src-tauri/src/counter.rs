@@ -31,7 +31,7 @@ pub fn get_counter_ids() -> Result<Vec<String>, String> {
 pub fn update_counter(id: String, counter_data: CounterTypeModifiable) -> Result<(), String> {
     // get counter from id
     // update counter
-    // store counter
+    // get storage to update the counter
     // return result
     Err("function is not implemented yet".to_string())
 }
@@ -46,7 +46,7 @@ pub fn delete_counter(id: String) -> Result<bool, String> {
 pub fn increment_counter(id: String, step: i64) -> Result<(), String> {
     // get counter from id
     // update counter
-    // store counter
+    // get storage to update the counter
     // return result
     Err("function is not implemented yet".to_string())
 }
