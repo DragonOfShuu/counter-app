@@ -2,35 +2,19 @@
 #![allow(unused)]
 
 use serde::{Deserialize, Serialize};
+use uuid::Uuid;
 
 mod storage;
-use storage::*;
 
-#[derive(clone, serialize, deserialize)]
-#[serde(rename_all = "camelcase")]
-pub struct CounterTypeModifiable{
-    name: Option<string>,
-    count: Option<i64>,
-    color: Option<string>,
-    default_count: Option<i64>,
-    default_step: Option<i64>,
-}
-
-#[derive(clone, serialize, deserialize)]
-#[serde(rename_all = "camelcase")]
-pub struct CounterType {
-    name: string,
-    count: i64,
-    color: string,
-    default_count: i64,
-    default_step: i64,
-    date_created: i64,
-    date_modified: i64,
-}
+mod types;
+use types::{CounterType, CounterTypeModifiable};
 
 #[tauri::command]
-pub fn new_counter(counter: CounterTypeModifiable) -> Result<String, String> {
-    Err("function is not implemented yet".to_string())
+pub fn new_counter(counter_data: CounterTypeModifiable) -> Result<Uuid, String> {
+    let counter = CounterType::from(counter_data);
+    
+
+    Err("Unable to create counter".to_string())
 }
 
 #[tauri::command]
