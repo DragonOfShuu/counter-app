@@ -1,11 +1,13 @@
-import { CommonModule } from "@angular/common";
-import { Component, model } from "@angular/core";
+import { AsyncPipe, CommonModule } from "@angular/common";
+import { Component, computed, model } from "@angular/core";
 import {
     FormControl,
     FormGroup,
-    FormsModule,
     ReactiveFormsModule,
+    ValueChangeEvent,
 } from "@angular/forms";
+import { hexToHsv } from "../../shared/functions/colors.function";
+import { filter, Observable, switchMap } from "rxjs";
 
 @Component({
     selector: "app-new-counter-page",
@@ -17,7 +19,20 @@ export class NewCounterPage {
     newCounterForm = new FormGroup({
         name: new FormControl(""),
         color: new FormControl("#ff0000"),
+        initialValue: new FormControl(0),
     });
+
+    hexToHsv(hex: string | null | undefined): {
+        h: number;
+        s: number;
+        v: number;
+    } {
+        if (!hex) {
+            return { h: 0, s: 100, v: 100 };
+        }
+        this.newCounterForm.get("color");
+        return hexToHsv(hex);
+    }
 
     onSubmit() {}
 }
