@@ -32,21 +32,6 @@ impl From<CounterTypeModifiable> for CounterType {
     /// Create a CounterType instance from a partial CounterTypeModifiable
     fn from(counter: CounterTypeModifiable) -> Self {
         Self::new().update(counter)
-//        let current_time = Local::now();
-
-//        Self {
-//            name: counter.name.unwrap_or("Counter ".to_string()),
-//            count: counter.count.unwrap_or(0),
-//            color: if let Some(color) = counter.color {
-//                HexColor::parse(&color).unwrap_or(HexColor::CYAN)
-//            } else {
-//                HexColor::CYAN
-//            },
-//            default_count: counter.default_count.unwrap_or(0),
-//            default_step: counter.default_step.unwrap_or(0),
-//            date_created: current_time,
-//            date_modified: current_time,
-//        }
     }
 }
 
@@ -70,7 +55,7 @@ impl CounterType {
             name: new.name.unwrap_or(self.name.clone()),
             count: new.count.unwrap_or(self.count),
             color: if let Some(color) = new.color {
-                HexColor::parse(&color).unwrap_or(self.color)
+                HexColor::parse_rgb(&color).unwrap_or(self.color)
             } else {
                 self.color
             },
