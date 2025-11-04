@@ -12,12 +12,13 @@
                 formControlName="name"
                 unstyled
             />
-            <div
-                class="relative size-8 flex justify-center items-center cursor-pointer self-end"
+            <button
+                class="relative size-8 flex justify-center items-center self-end"
+                unstyled
             >
                 <input
                     type="color"
-                    class="relative opacity-0 z-10"
+                    class="relative opacity-0 z-10 cursor-pointer"
                     formControlName="color"
                 />
                 <div class="absolute inset-0 z-0">
@@ -32,17 +33,40 @@
                         />
                     </svg>
                 </div>
-            </div>
+            </button>
         </div>
     </div>
-    <div class="mx-3 [&>label]:flex [&>label]:flex-col [&>label]:mb-2">
-        <label class="block mb-2 text-lg font-medium"
-            >Initial Value
-            <input type="number" class="" formControlName="initialValue" />
+    <div
+        class="mx-3 [&>label]:flex [&>label]:flex-col [&>label]:mb-2 [&>label]:font-bold"
+    >
+        <label class="flex flex-col items-center mb-2 text-lg font-medium">
+            Counter Value
+            <input
+                type="number"
+                class="text-center w-48 text-6xl p-0 m-0 aspect-square"
+                formControlName="initialValue"
+            />
         </label>
         <label class="block mb-2 text-lg font-medium"
-            >Initial Value
-            <input type="number" class="" formControlName="initialValue" />
+            >Default Step
+            <input type="number" formControlName="defaultStep" />
         </label>
+    </div>
+    <div class="fixed bottom-0 left-0 right-0 h-24 flex p-3 gap-2">
+        <button
+            type="submit"
+            class="w-full h-full bg-primary-400 text-white text-lg font-medium disabled:bg-gray-400"
+            [disabled]="newCounterForm.invalid"
+        >
+            Create Counter
+        </button>
+        <button
+            type="button"
+            routerLink="/"
+            class="w-full h-full bg-primary-600 saturate-[75%] text-white text-lg font-medium disabled:bg-gray-400 basis-4"
+            [disabled]="newCounterForm.invalid"
+        >
+            Cancel
+        </button>
     </div>
 </form>

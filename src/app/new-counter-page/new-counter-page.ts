@@ -1,25 +1,21 @@
-import { AsyncPipe, CommonModule } from "@angular/common";
-import { Component, computed, model } from "@angular/core";
-import {
-    FormControl,
-    FormGroup,
-    ReactiveFormsModule,
-    ValueChangeEvent,
-} from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { Component } from "@angular/core";
+import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { hexToHsv } from "../../shared/functions/colors.function";
-import { filter, Observable, switchMap } from "rxjs";
+import { RouterLink } from "@angular/router";
 
 @Component({
     selector: "app-new-counter-page",
-    imports: [ReactiveFormsModule, CommonModule],
+    imports: [ReactiveFormsModule, CommonModule, RouterLink],
     templateUrl: "./new-counter-page.html",
     styleUrl: "./new-counter-page.css",
 })
 export class NewCounterPage {
     newCounterForm = new FormGroup({
         name: new FormControl(""),
-        color: new FormControl("#ff0000"),
+        color: new FormControl("#467979"),
         initialValue: new FormControl(0),
+        defaultStep: new FormControl(1),
     });
 
     hexToHsv(hex: string | null | undefined): {
