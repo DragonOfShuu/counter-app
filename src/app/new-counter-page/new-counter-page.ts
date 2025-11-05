@@ -1,8 +1,9 @@
 import { CommonModule } from "@angular/common";
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { hexToHsv } from "../../shared/functions/colors.function";
 import { RouterLink } from "@angular/router";
+import { DynamicColorsService } from "../../shared/services/dynamic-colors-service/dynamic-colors-service";
 
 @Component({
     selector: "app-new-counter-page",
@@ -11,12 +12,20 @@ import { RouterLink } from "@angular/router";
     styleUrl: "./new-counter-page.css",
 })
 export class NewCounterPage {
+    dynamicColorService = inject(DynamicColorsService);
     newCounterForm = new FormGroup({
         name: new FormControl(""),
-        color: new FormControl("#467979"),
+        color: new FormControl(this.dynamicColorService.getCurrentColor()),
         initialValue: new FormControl(0),
         defaultStep: new FormControl(1),
     });
+
+    constructor() {
+        this.newCounterForm.get("color")?.valueChanges.subscribe((color) => {
+            if (!color) return;
+            this.dynamicColorService.changeGlobalColors(color);
+        });
+    }
 
     hexToHsv(hex: string | null | undefined): {
         h: number;

@@ -1,17 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+@import "@zyphox/tailwind-dynamic-colors";
 
 @theme {
-    --color-primary-50: #edf2f2;
-    --color-primary-100: #dae4e4;
-    --color-primary-200: #b5c9c9;
-    --color-primary-300: #90afaf;
-    --color-primary-400: #6b9494;
-    --color-primary-500: #467979;
-    --color-primary-600: #386161;
-    --color-primary-700: #2a4949;
-    --color-primary-800: #1c3030;
-    --color-primary-900: #0e1818;
+    /* --color-dynamic-50: #edf2f2;
+    --color-dynamic-100: #dae4e4;
+    --color-dynamic-200: #b5c9c9;
+    --color-dynamic-300: #90afaf;
+    --color-dynamic-400: #6b9494;
+    --color-dynamic-500: #467979;
+    --color-dynamic-600: #386161;
+    --color-dynamic-700: #2a4949;
+    --color-dynamic-800: #1c3030;
+    --color-dynamic-900: #0e1818; */
 }
 
 @layer base {
@@ -21,7 +22,7 @@
         line-height: 24px;
         font-weight: 400;
 
-        @apply bg-primary-50;
+        @apply bg-dynamic-50 transition-colors;
 
         font-synthesis: none;
         text-rendering: optimizeLegibility;
@@ -77,19 +78,19 @@
 
     @variant dark {
         :root {
-            @apply bg-primary-900 text-primary-50;
+            @apply bg-dynamic-900 text-dynamic-50;
         }
 
         a:not([unstyled]):hover {
-            @apply text-primary-200;
+            @apply text-dynamic-200;
         }
 
         input:not([unstyled]),
         button:not([unstyled]) {
-            @apply text-primary-50 bg-primary-800;
+            @apply text-dynamic-50 bg-dynamic-800;
         }
         button:not([unstyled]):active {
-            @apply bg-primary-700;
+            @apply bg-dynamic-700;
         }
     }
 }
