@@ -18,7 +18,12 @@ export class CounterManagerService {
                 store.set(id, {
                     id: id,
                     data: {
-                        ...counter,
+                        name: "Unnamed Counter",
+                        count: 0,
+                        color: "#467979",
+                        defaultCount: 0,
+                        defaultStep: 1,
+                        ...counter, // Override defaults with provided values
                         dateCreated: new Date().getTime(),
                         dateModified: new Date().getTime(),
                     },

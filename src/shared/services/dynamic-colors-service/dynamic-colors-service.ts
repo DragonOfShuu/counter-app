@@ -8,10 +8,7 @@ export class DynamicColorsService {
 
     constructor() {
         document.documentElement.classList.add("color-dynamic");
-        document.documentElement.style.setProperty(
-            "--color-dynamic",
-            this.#currentColor
-        );
+        this.changeGlobalColors(this.#currentColor);
     }
 
     changeGlobalColors(color: string): void {

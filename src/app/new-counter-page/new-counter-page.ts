@@ -1,9 +1,15 @@
 import { CommonModule } from "@angular/common";
-import { Component, inject } from "@angular/core";
-import { FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
+import { Component, computed, inject, signal } from "@angular/core";
+import {
+    FormControl,
+    FormGroup,
+    ReactiveFormsModule,
+    Validators,
+} from "@angular/forms";
 import { hexToHsv } from "../../shared/functions/colors.function";
-import { RouterLink } from "@angular/router";
+import { Router, RouterLink } from "@angular/router";
 import { DynamicColorsService } from "../../shared/services/dynamic-colors-service/dynamic-colors-service";
+import { CounterInterfaceService } from "../../shared/services/counter-interface-service/counter-interface-service";
 
 @Component({
     selector: "app-new-counter-page",
@@ -13,16 +19,26 @@ import { DynamicColorsService } from "../../shared/services/dynamic-colors-servi
 })
 export class NewCounterPage {
     dynamicColorService = inject(DynamicColorsService);
+    counterInterfaceService = inject(CounterInterfaceService);
+    router = inject(Router);
+    color = signal(this.dynamicColorService.getCurrentColor() || "#467979");
+    textColor = computed(() => {
+        const hsv = this.hexToHsv(this.color());
+        return hsv.v > 65 ? "#000" : "#fff";
+    });
     newCounterForm = new FormGroup({
-        name: new FormControl(""),
-        color: new FormControl(this.dynamicColorService.getCurrentColor()),
-        initialValue: new FormControl(0),
+        name: new FormControl("", {
+            validators: [Validators.maxLength(30), Validators.required],
+        }),
+        color: new FormControl(this.color()),
+        defaultCount: new FormControl(0),
         defaultStep: new FormControl(1),
     });
 
     constructor() {
         this.newCounterForm.get("color")?.valueChanges.subscribe((color) => {
             if (!color) return;
+            this.color.set(color);
             this.dynamicColorService.changeGlobalColors(color);
         });
     }
@@ -39,5 +55,22 @@ export class NewCounterPage {
         return hexToHsv(hex);
     }
 
-    onSubmit() {}
+    onSubmit() {
+        console.log("Form submitted:", this.newCounterForm.value);
+        const newCounterObservable = this.counterInterfaceService.newCounter({
+            name: this.newCounterForm.get("name")?.value || "Unnamed Counter",
+            color: this.newCounterForm.get("color")?.value || "#467979",
+            defaultCount: this.newCounterForm.get("defaultCount")?.value || 0,
+            defaultStep: this.newCounterForm.get("defaultStep")?.value || 1,
+        });
+        newCounterObservable.subscribe({
+            next: (id) => {
+                console.log("New counter created with ID:", id);
+                this.router.navigate(["/"]);
+            },
+            error: (err) => {
+                console.error("Error creating new counter:", err);
+            },
+        });
+    }
 }

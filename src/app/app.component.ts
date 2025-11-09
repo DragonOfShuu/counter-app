@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 // import { invoke } from "@tauri-apps/api/core";
 import { TitleBar } from "../shared/components/title-bar/title-bar";
 import { FooterBar } from "../shared/components/footer-bar/footer-bar";
+import { DynamicColorsService } from "../shared/services/dynamic-colors-service/dynamic-colors-service";
 
 @Component({
     selector: "app-root",
@@ -10,4 +11,6 @@ import { FooterBar } from "../shared/components/footer-bar/footer-bar";
     templateUrl: "./app.component.html",
     styleUrl: "./app.component.css",
 })
-export class AppComponent {}
+export class AppComponent {
+    dynamicColorService = inject(DynamicColorsService);
+}

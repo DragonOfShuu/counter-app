@@ -17,7 +17,7 @@ export class CounterInterfaceService {
 
     counterChangeSubject = new Subject<string>();
 
-    newCounter(counter: CounterType): Observable<string> {
+    newCounter(counter: CounterTypeModifiable): Observable<string> {
         return this.counterManagerService.newCounterObservable(counter).pipe(
             take(1),
             tap((id) => {
