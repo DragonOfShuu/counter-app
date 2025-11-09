@@ -3,7 +3,7 @@ import { Counter } from "../../shared/components/counter/counter";
 import { FooterBar } from "../../shared/components/footer-bar/footer-bar";
 import { CounterInterfaceService } from "../../shared/services/counter-interface-service/counter-interface-service";
 import { merge, switchMap, tap } from "rxjs";
-import { AsyncPipe } from "@angular/common";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: "app-counter-viewer-page",
@@ -26,7 +26,7 @@ export class CounterViewerPage {
     ).pipe(tap(() => this.loading.set(false)));
 
     constructor() {
-        this.allCounters$.subscribe((ids) => {
+        this.allCounters$.pipe(takeUntilDestroyed()).subscribe((ids) => {
             this.counterIds.set(ids);
         });
     }

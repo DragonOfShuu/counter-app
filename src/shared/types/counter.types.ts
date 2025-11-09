@@ -12,11 +12,11 @@ type CounterTypeModifiable = Partial<
     Omit<CounterType, "dateCreated" | "dateModified">
 >;
 
-type Counter = {
+type CounterCompleteType = {
     id: string;
     data: CounterType;
 };
 
 type CounterCollectionType = {
-    [id: string]: Counter;
+    [id: string]: CounterCompleteType;
 };

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { load } from "@tauri-apps/plugin-store";
-import { defer, from, Observable, of, shareReplay, switchMap } from "rxjs";
+import { defer, from, map, Observable, of, shareReplay, switchMap } from "rxjs";
 import { uuid } from "../../functions/uuid.function";
 
 @Injectable({
@@ -27,7 +27,7 @@ export class CounterManagerService {
                         dateCreated: new Date().getTime(),
                         dateModified: new Date().getTime(),
                     },
-                } as Counter);
+                } as CounterCompleteType);
                 return of(id);
             })
         );
@@ -35,12 +35,12 @@ export class CounterManagerService {
 
     getCounterObservable(id: string): Observable<CounterType> {
         return this.store.pipe(
-            switchMap((store) => store.get<CounterType>(id)),
-            switchMap((counter) => {
+            switchMap((store) => store.get<CounterCompleteType>(id)),
+            map((counter) => {
                 if (!counter) {
                     throw new Error("Counter not found");
                 }
-                return of(counter);
+                return counter.data;
             })
         );
     }
@@ -51,7 +51,7 @@ export class CounterManagerService {
 
     updateCounterObservable(
         id: string,
-        dataConsumer: (counter: CounterType) => Partial<CounterTypeModifiable>
+        dataConsumer: (counter: CounterType) => CounterTypeModifiable
     ): Observable<void> {
         return this.getCounterObservable(id).pipe(
             switchMap((counter) => {
@@ -60,7 +60,10 @@ export class CounterManagerService {
                 }
                 return this.store.pipe(
                     switchMap((store) =>
-                        store.set(id, { ...counter, ...dataConsumer(counter) })
+                        store.set(id, {
+                            id,
+                            data: { ...counter, ...dataConsumer(counter) },
+                        } as CounterCompleteType)
                     )
                 );
             })
@@ -71,12 +74,16 @@ export class CounterManagerService {
         return this.store.pipe(switchMap((store) => store.delete(id)));
     }
 
-    incrementCounterObservable(id: string, step: number): Observable<void> {
-        return this.updateCounterObservable(id, () => ({ count: step }));
+    incrementCounterObservable(id: string, step?: number): Observable<void> {
+        return this.updateCounterObservable(id, (counter) => ({
+            count: counter.count + (step ?? counter.defaultStep),
+        }));
     }
 
-    decrementCounterObservable(id: string, step: number): Observable<void> {
-        return this.updateCounterObservable(id, () => ({ count: -step }));
+    decrementCounterObservable(id: string, step?: number): Observable<void> {
+        return this.updateCounterObservable(id, (counter) => ({
+            count: counter.count - (step ?? counter.defaultStep),
+        }));
     }
 
     resetCounterObservable(id: string): Observable<void> {

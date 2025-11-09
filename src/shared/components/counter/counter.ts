@@ -1,7 +1,16 @@
 import { Component, computed, inject, input } from "@angular/core";
 import { CounterInterfaceService } from "../../services/counter-interface-service/counter-interface-service";
-import { catchError, filter, merge, Observable, of, switchMap } from "rxjs";
-import { toObservable } from "@angular/core/rxjs-interop";
+import {
+    catchError,
+    filter,
+    map,
+    merge,
+    Observable,
+    of,
+    switchMap,
+    tap,
+} from "rxjs";
+import { toObservable, toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: "app-counter",
@@ -20,11 +29,31 @@ export class Counter {
         ),
         this.counterId$
     ).pipe(
-        filter((id) => !!id),
+        filter((id) => {
+            console.log("Attempting to filter, id is: ", id);
+            return !!id;
+        }),
         switchMap((id) => this.counterInterface.getCounter(id!)),
+        tap((data) => console.log("Fetched counter data: ", data)),
         catchError((e) => {
             console.error("Issue occurred when fetching counter data:", e);
             return of(null);
         })
     );
+
+    counterData = toSignal<CounterType | null>(this.counterData$, {
+        initialValue: null,
+    });
+
+    increment() {
+        const id = this.counterId();
+        if (!id) return;
+        this.counterInterface.incrementCounter(id).subscribe();
+    }
+
+    decrement() {
+        const id = this.counterId();
+        if (!id) return;
+        this.counterInterface.decrementCounter(id).subscribe();
+    }
 }

@@ -1,1 +1,12 @@
-<p>counter works!</p>
+<!-- @let counterData = this.counterData(); @if (counterData !== null) { -->
+@if (counterData(); as counterData) {
+<div class="counter-container">
+    <h2>{{ counterData.name }}</h2>
+    <p>Current Count: {{ counterData.count }}</p>
+    <p>Step: {{ counterData.defaultStep }}</p>
+    <button (click)="increment()">Increment</button>
+    <button (click)="decrement()">Decrement</button>
+</div>
+} @else {
+<p>Loading counter data...</p>
+}

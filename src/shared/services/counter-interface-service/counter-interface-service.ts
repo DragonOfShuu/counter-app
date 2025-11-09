@@ -26,7 +26,7 @@ export class CounterInterfaceService {
         );
     }
 
-    incrementCounter(id: string, step: number): Observable<void> {
+    incrementCounter(id: string, step?: number): Observable<void> {
         return this.counterManagerService
             .incrementCounterObservable(id, step)
             .pipe(
@@ -37,7 +37,7 @@ export class CounterInterfaceService {
             );
     }
 
-    decrementCounter(id: string, step: number): Observable<void> {
+    decrementCounter(id: string, step?: number): Observable<void> {
         return this.counterManagerService
             .decrementCounterObservable(id, step)
             .pipe(
@@ -63,30 +63,21 @@ export class CounterInterfaceService {
     }
 
     getCounterValue(id: string): Observable<number> {
-        return this.counterManagerService.getCounterValueObservable(id).pipe(
-            take(1),
-            tap(() => {
-                this.counterChangeSubject.next(id);
-            })
-        );
+        return this.counterManagerService
+            .getCounterValueObservable(id)
+            .pipe(take(1));
     }
 
     getCounter(id: string): Observable<CounterType> {
-        return this.counterManagerService.getCounterObservable(id).pipe(
-            take(1),
-            tap(() => {
-                this.counterChangeSubject.next(id);
-            })
-        );
+        return this.counterManagerService
+            .getCounterObservable(id)
+            .pipe(take(1));
     }
 
     getCounterIds(): Observable<string[]> {
-        return this.counterManagerService.getCounterIdsObservable().pipe(
-            take(1),
-            tap(() => {
-                // no specific id to emit here — tap kept for consistency
-            })
-        );
+        return this.counterManagerService
+            .getCounterIdsObservable()
+            .pipe(take(1));
     }
 
     deleteCounter(id: string): Observable<boolean> {
