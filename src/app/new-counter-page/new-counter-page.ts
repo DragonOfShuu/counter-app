@@ -10,8 +10,6 @@ import { hexToHsv } from "../../shared/functions/colors.function";
 import { Router, RouterLink } from "@angular/router";
 import { DynamicColorsService } from "../../shared/services/dynamic-colors-service/dynamic-colors-service";
 import { CounterInterfaceService } from "../../shared/services/counter-interface-service/counter-interface-service";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { take } from "rxjs";
 
 @Component({
     selector: "app-new-counter-page",

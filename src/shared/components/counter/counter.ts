@@ -21,6 +21,7 @@ import { toObservable, toSignal } from "@angular/core/rxjs-interop";
 export class Counter {
     counterInterface = inject(CounterInterfaceService);
     counterId = input<string>();
+    stepModifier = input<number | undefined>();
     counterId$ = toObservable(this.counterId);
 
     counterData$: Observable<CounterType | null> = merge(
