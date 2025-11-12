@@ -1,6 +1,8 @@
 <!-- @let counterData = this.counterData(); @if (counterData !== null) { -->
 <div
     class="rounded-xl bg-dynamic-800 p-4 flex items-center justify-center flex-col space-y-4 aspect-square h-[65vh] relative select-none cursor-pointer"
+    (pointerdown)="onPress()"
+    (pointerup)="onRelease()"
 >
     @if (counterData(); as counterData) {
     <h1 class="z-10 absolute top-4 left-0 right-0 text-lg md:text-3xl">
