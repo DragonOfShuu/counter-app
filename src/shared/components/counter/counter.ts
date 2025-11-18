@@ -41,9 +41,7 @@ export class Counter {
     ).pipe(
         filter((id) => !!id),
         switchMap((id) => this.counterInterface.getCounter(id!)),
-        // tap((data) => console.log("Fetched counter data: ", data)),
         catchError((e) => {
-            // console.error("Issue occurred when fetching counter data:", e);
             return of(null);
         })
     );

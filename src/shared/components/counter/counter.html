@@ -1,18 +1,12 @@
-<!-- @let counterData = this.counterData(); @if (counterData !== null) { -->
+@if (counterData(); as counterData) {
 <div
-    class="rounded-xl bg-dynamic-800 p-4 flex items-center justify-center flex-col space-y-4 aspect-square h-[65vh] relative select-none cursor-pointer"
+    class="rounded-xl bg-dynamic-800 p-4 flex items-center justify-center flex-col space-y-4 aspect-square relative select-none cursor-pointer @container"
     (pointerdown)="onPress()"
     (pointerup)="onRelease()"
 >
-    @if (counterData(); as counterData) {
-    <h1 class="z-10 absolute top-4 left-0 right-0 text-lg md:text-3xl">
-        {{ counterData.name }}
-    </h1>
-    <p class="z-10 relative text-[20vh]">{{ counterData.count }}</p>
+    <p class="z-10 relative text-[20cqw]">{{ counterData.count }}</p>
     <div
-        class="absolute inset-0 m-8 rounded-full border-dynamic-700 border-[12px]"
+        class="absolute inset-0 m-8 rounded-2xl border-dynamic-700 border-[12px]"
     ></div>
-    } @else {
-    <p>Loading counter data...</p>
-    }
 </div>
+}

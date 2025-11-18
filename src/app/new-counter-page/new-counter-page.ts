@@ -21,7 +21,7 @@ export class NewCounterPage {
     dynamicColorService = inject(DynamicColorsService);
     counterInterfaceService = inject(CounterInterfaceService);
     router = inject(Router);
-    color = signal(this.dynamicColorService.getCurrentColor() || "#467979");
+    color = signal(this.dynamicColorService.getCurrentColor());
     textColor = computed(() => {
         const hsv = this.hexToHsv(this.color());
         return hsv.v > 65 ? "#000" : "#fff";
