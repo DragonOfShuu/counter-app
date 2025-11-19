@@ -2,16 +2,8 @@ import { Component, computed, inject, signal } from "@angular/core";
 import { Counter } from "../../shared/components/counter/counter";
 import { FooterBar } from "../../shared/components/footer-bar/footer-bar";
 import { CounterInterfaceService } from "../../shared/services/counter-interface-service/counter-interface-service";
-import {
-    connectable,
-    forkJoin,
-    map,
-    merge,
-    Observable,
-    switchMap,
-    tap,
-} from "rxjs";
-import { takeUntilDestroyed, toSignal } from "@angular/core/rxjs-interop";
+import { connectable, forkJoin, merge, Observable, switchMap, tap } from "rxjs";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
     selector: "app-counter-viewer-page",

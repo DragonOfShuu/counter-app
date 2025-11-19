@@ -1,10 +1,10 @@
 <div class="flex flex-col size-full">
-    <div
-        class="flex grow justify-center items-center w-full overflow-x-scroll overflow-y-hidden no-scrollbar"
-    >
+    <div class="counter-overflow-container no-scrollbar">
         @defer (when !loading()) { @for (counterId of counterIds(); track
         counterId) {
-        <div class="grid grid-rows-[1fr_2fr_1fr] grid-cols-1 h-full w-[50vw]">
+        <div
+            class="grid grid-rows-[1fr_2fr_1fr] grid-cols-1 h-full min-w-[50vw]"
+        >
             <div></div>
             <app-counter [counterId]="counterId"></app-counter>
             <div>

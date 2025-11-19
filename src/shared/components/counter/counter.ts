@@ -104,13 +104,22 @@ export class Counter {
         this.counterInterface.resetCounter(id).subscribe();
     }
 
-    onPress() {
-        if (this.counterIncrementSubscription) return;
-        this.counterIncrementSubscription = this.counterIncrement$.subscribe();
+    onPress(e: MouseEvent) {
+        if (e.button === 0) {
+            if (this.counterIncrementSubscription) return;
+            this.counterIncrementSubscription =
+                this.counterIncrement$.subscribe();
+        } else if (e.button === 2) {
+            e.stopPropagation();
+            this.decrement();
+        }
     }
 
-    onRelease() {
-        this.counterIncrementSubscription?.unsubscribe();
-        this.counterIncrementSubscription = null;
+    onRelease(e: MouseEvent) {
+        if (e.button === 0) {
+            this.counterIncrementSubscription?.unsubscribe();
+            this.counterIncrementSubscription = null;
+        }
+        // Room for other buttons if needed
     }
 }

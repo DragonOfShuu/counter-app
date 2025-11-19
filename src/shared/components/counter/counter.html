@@ -1,8 +1,9 @@
 @if (counterData(); as counterData) {
 <div
     class="rounded-xl bg-dynamic-800 p-4 flex items-center justify-center flex-col space-y-4 aspect-square relative select-none cursor-pointer @container"
-    (pointerdown)="onPress()"
-    (pointerup)="onRelease()"
+    (mousedown)="onPress($event)"
+    (mouseup)="onRelease($event)"
+    (contextmenu)="false"
 >
     <p class="z-10 relative text-[20cqw]">{{ counterData.count }}</p>
     <div
