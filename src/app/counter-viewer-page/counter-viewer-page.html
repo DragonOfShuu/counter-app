@@ -1,21 +1,26 @@
 <div class="flex flex-col size-full">
+    @defer (when !loading()) {
     <div class="counter-overflow-container no-scrollbar">
-        @defer (when !loading()) { @for (counterId of counterIds(); track
-        counterId) {
+        @for (counterId of counterIds(); track counterId) {
         <div
             class="grid grid-rows-[1fr_2fr_1fr] grid-cols-1 h-full min-w-[50vw]"
         >
             <div></div>
             <app-counter [counterId]="counterId"></app-counter>
-            <div>
-                <h2 class="text-center text-2xl mt-2">
-                    {{ allCounters()?.[counterId]?.name }}
-                </h2>
+            <div class="flex justify-between items-center w-full">
+                <h2 class="text-2xl">{{ allCounters()?.[counterId]?.name }}</h2>
+                <div class="grow"></div>
+                <app-three-dots
+                    class="fill-dynamic-50 hover:fill-dynamic-500 cursor-pointer"
+                ></app-three-dots>
             </div>
         </div>
-        } } @loading {
-        <div>Loading counters...</div>
+        } @empty {
+        <p class="text-dynamic-800 font-bold text-6xl">No Counters</p>
         }
     </div>
+    } @loading {
+    <div>Loading counters...</div>
+    }
     <app-footer-bar class=""></app-footer-bar>
 </div>

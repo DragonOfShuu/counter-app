@@ -4,10 +4,11 @@ import { FooterBar } from "../../shared/components/footer-bar/footer-bar";
 import { CounterInterfaceService } from "../../shared/services/counter-interface-service/counter-interface-service";
 import { connectable, forkJoin, merge, Observable, switchMap, tap } from "rxjs";
 import { toSignal } from "@angular/core/rxjs-interop";
+import { ThreeDots } from "../../shared/components/three-dots/three-dots";
 
 @Component({
     selector: "app-counter-viewer-page",
-    imports: [Counter, FooterBar],
+    imports: [Counter, FooterBar, ThreeDots],
     templateUrl: "./counter-viewer-page.html",
     styleUrl: "./counter-viewer-page.css",
 })
