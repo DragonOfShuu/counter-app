@@ -3,16 +3,33 @@
     <div class="counter-overflow-container no-scrollbar">
         @for (counterId of counterIds(); track counterId) {
         <div
-            class="grid grid-rows-[1fr_2fr_1fr] grid-cols-1 h-full min-w-[50vw]"
+            class="grid grid-rows-[1fr_2fr_1fr] grid-cols-1 h-full min-w-[50vw] w-[50vw]"
         >
             <div></div>
             <app-counter [counterId]="counterId"></app-counter>
             <div class="flex justify-between items-center w-full">
-                <h2 class="text-2xl">{{ allCounters()?.[counterId]?.name }}</h2>
+                <div>
+                    <h2 class="text-2xl">
+                        {{ allCounters()?.[counterId]?.name }}
+                    </h2>
+                </div>
                 <div class="grow"></div>
-                <app-three-dots
-                    class="fill-dynamic-50 hover:fill-dynamic-500 cursor-pointer"
-                ></app-three-dots>
+                <div
+                    class="relative"
+                    (click)="expandDropdown.set(!expandDropdown())"
+                >
+                    <app-three-dots
+                        class="fill-dynamic-50 hover:fill-dynamic-500 cursor-pointer"
+                    ></app-three-dots>
+                    <!-- Dropdown -->
+                    @if (expandDropdown() ) {
+                    <div class="counter-dropdown mt-2 right-0 w-40">
+                        <div (click)="deleteCounter(counterId)">
+                            Delete Counter
+                        </div>
+                    </div>
+                    }
+                </div>
             </div>
         </div>
         } @empty {

@@ -9,11 +9,24 @@
     scroll-padding: 100vw;
     @apply flex grow justify-center items-center w-full
         overflow-x-scroll overflow-y-hidden;
+}
 
-    div:first-child {
-        margin-left: 100vw;
-    }
-    div:last-child {
-        margin-right: 100vw;
+.counter-dropdown {
+    background-color: var(--dynamic-100);
+    border-color: var(--dynamic-300);
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+    @apply absolute bottom-full flex flex-col-reverse border;
+
+    div {
+        padding: 0.5rem 1rem;
+
+        /* @apply hover:bg-dynamic-200 cursor-pointer; */
+
+        &:hover {
+            background-color: var(--dynamic-200);
+            cursor: pointer;
+        }
     }
 }

@@ -15,6 +15,7 @@ import { ThreeDots } from "../../shared/components/three-dots/three-dots";
 export class CounterViewerPage {
     counterInterfaceService = inject(CounterInterfaceService);
     loading = signal(true);
+    expandDropdown = signal(false);
     allCounterIds$ = connectable(
         merge(
             this.counterInterfaceService.counterChangeSubject.pipe(
@@ -42,5 +43,11 @@ export class CounterViewerPage {
 
     constructor() {
         this.allCounterIds$.connect();
+    }
+
+    deleteCounter(counterId: string) {
+        this.counterInterfaceService.deleteCounter(counterId).subscribe(() => {
+            // Counter deleted, any additional logic can be added here if needed
+        });
     }
 }
